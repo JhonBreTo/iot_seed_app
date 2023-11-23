@@ -20,6 +20,8 @@ app.use(
 );
 app.use(cors());
 
+let mongoConnected = false; 
+
 //Mongo Connection
 const mongoUserName = process.env.MONGO_USERNANE;
 const mongoPassword = process.env.MONGO_PASSWORD;
@@ -55,6 +57,7 @@ mongoose.connect(uri, options).then(
     console.log("*******************************".green);
     console.log("\n");
     global.check_mqtt_superuser();
+    mongoConnected = true; 
 
   },
   err => {
@@ -68,18 +71,21 @@ mongoose.connect(uri, options).then(
 );
 
 
-//express routes
-app.use("/api", require("./routes/devices.js"));
-app.use("/api", require("./routes/users.js"));
-app.use("/api", require("./routes/templates.js"));
-app.use("/api", require("./routes/webhooks.js"));
-app.use("/api", require("./routes/emqxapi.js"));
-app.use("/api", require("./routes/alarms.js"));
-app.use("/api", require("./routes/dataprovider.js"));
 
-module.exports = app;
+if(mongoConnected){
+  //express routes
+  app.use("/api", require("./routes/devices.js"));
+  app.use("/api", require("./routes/users.js"));
+  app.use("/api", require("./routes/templates.js"));
+  app.use("/api", require("./routes/webhooks.js"));
+  app.use("/api", require("./routes/emqxapi.js"));
+  app.use("/api", require("./routes/alarms.js"));
+  app.use("/api", require("./routes/dataprovider.js"));
+}
 
-//listener
-app.listen(process.env.API_PORT, () => {
-  console.log("API server listening on port "+process.env.API_PORT);
-});
+  module.exports = app;
+
+  //listener
+  app.listen(process.env.API_PORT, () => {
+    console.log("API server listening on port "+process.env.API_PORT);
+  });
