@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const colors = require("colors");
 
+require('dotenv').config();
+
 //instances
 const app = express();
 
