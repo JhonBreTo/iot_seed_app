@@ -20,22 +20,6 @@ app.use(
 );
 app.use(cors());
 
-//express routes
-app.use("/api", require("./routes/devices.js"));
-app.use("/api", require("./routes/users.js"));
-app.use("/api", require("./routes/templates.js"));
-app.use("/api", require("./routes/webhooks.js"));
-app.use("/api", require("./routes/emqxapi.js"));
-app.use("/api", require("./routes/alarms.js"));
-app.use("/api", require("./routes/dataprovider.js"));
-
-module.exports = app;
-
-//listener
-app.listen(process.env.API_PORT, () => {
-  console.log("API server listening on port "+process.env.API_PORT);
-});
-
 //Mongo Connection
 const mongoUserName = process.env.MONGO_USERNANE;
 const mongoPassword = process.env.MONGO_PASSWORD;
@@ -82,3 +66,20 @@ mongoose.connect(uri, options).then(
     console.log(err);
   }
 );
+
+
+//express routes
+app.use("/api", require("./routes/devices.js"));
+app.use("/api", require("./routes/users.js"));
+app.use("/api", require("./routes/templates.js"));
+app.use("/api", require("./routes/webhooks.js"));
+app.use("/api", require("./routes/emqxapi.js"));
+app.use("/api", require("./routes/alarms.js"));
+app.use("/api", require("./routes/dataprovider.js"));
+
+module.exports = app;
+
+//listener
+app.listen(process.env.API_PORT, () => {
+  console.log("API server listening on port "+process.env.API_PORT);
+});
