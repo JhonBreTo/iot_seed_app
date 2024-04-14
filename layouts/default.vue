@@ -109,8 +109,9 @@ export default {
       sidebarBackground: "blue", //vue|blue|orange|green|red|primary
       client:null,
       options:{
-        host: process.env.mqtt_host,
-        port: process.env.mqtt_port,
+        host: process.env.mqtt_host || 'localhost',
+        port: process.env.mqtt_port || 8083,
+        prefix: process.env.mqtt_ssl_prefix || 'ws://',
         endpoint: "/mqtt",
         clean: true,
         connectTimeout: 5000,
@@ -203,7 +204,9 @@ export default {
       //ex topic: "userid/did/variableId/sdata"
       const deviceSubscribeTopic = this.$store.state.auth.userData._id + "/+/+/sdata";
       const notifSubscribeTopic = this.$store.state.auth.userData._id + "/+/+/notif";
-      const connectUrl = process.env.mqtt_prefix+ this.options.host + ":" + this.options.port + this.options.endpoint;      
+      const connectUrl = this.options.prefix + this.options.host + ":" + this.options.port + this.options.endpoint;  
+      console.log("conectando a: ")    
+      console.log(connectUrl);
       try {
         this.client = mqtt.connect(connectUrl, this.options);      
       } catch (error) {
@@ -266,7 +269,16 @@ export default {
       });
 
       $nuxt.$on('mqtt-sender', (toSend) => {
-        this.client.publish(toSend.topic, JSON.stringify(toSend.msg));
+        console.log("Entrando al nuxt $on mqtt-sender");
+        try {
+          console.log("Cliente ");
+          console.log(this.client.connected);
+          this.client.publish(toSend.topic, JSON.stringify(toSend.msg));
+          console.log('Mensaje publicado correctamente');
+
+        } catch (error) {
+          console.error('Error al publicar:', error);
+        }
       });
     
     },
