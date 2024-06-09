@@ -20,7 +20,14 @@ export default {
     }
   },
   router: {
-    linkExactActiveClass: 'active'
+    linkExactActiveClass: 'active',
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'error',
+        path: '*',
+        component: resolve(__dirname, 'layouts/error.vue')
+      });
+    }
   },
   /*
   ** Customize the progress-bar color

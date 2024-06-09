@@ -58,7 +58,7 @@
               type="primary"
               class="mb-3"
               size="lg"
-              >Add</base-button
+              >Agregar</base-button
             >
           </div>
         </div>

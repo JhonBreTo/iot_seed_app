@@ -29,16 +29,7 @@
                 label="Indicador Booleano INPUT <-"
               >
               </el-option>
-              <el-option
-                class="text-dark"
-                value="map"
-                label="Mapa INPUT <-"
-              ></el-option>
-              <el-option
-                class="text-dark"
-                value="switch"
-                label="Interruptor OUTPUT ->"
-              ></el-option>
+              
               <el-option
                 class="text-dark"
                 value="button"
@@ -58,7 +49,7 @@
               >
               </base-input>
 
-              <base-input v-model="ncConfig.unit" label="Unit" type="text">
+              <base-input v-model="ncConfig.unit" label="Unidades" type="text">
               </base-input>
 
               <base-input
@@ -78,7 +69,7 @@
 
               <base-input
                 v-model.number="ncConfig.variableSendFreq"
-                label="Send Freq"
+                label="Frecuencia"
                 type="number"
               ></base-input>
 
@@ -432,7 +423,7 @@
 
               <base-input
                 v-model="iotIndicatorConfig.variableSendFreq"
-                label="Send Freq"
+                label="Frecuencia"
                 type="text"
               ></base-input>
 
@@ -471,7 +462,7 @@
               <el-select
                 v-model="iotIndicatorConfig.column"
                 class="select-primary"
-                placeholder="Ajustr Ancho de Columna"
+                placeholder="Ajustar Ancho de Columna"
                 style="width: 100%;"
               >
                 <el-option
@@ -792,7 +783,7 @@ export default {
         column: "col-4",
         widget: "button",
         class: "danger",
-        message: "{'fanstatus': 'stop'}"
+        message: "stop"
       },
 
     };

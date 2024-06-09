@@ -144,7 +144,7 @@
             </el-table-column>
           </el-table>
 
-          <h4 v-else class="card-title">No Alarm Rules</h4>
+          <h4 v-else class="card-title">No Exiten Reglas de Alarma</h4>
         </card>
       </div>
     </div>

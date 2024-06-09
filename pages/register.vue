@@ -32,6 +32,13 @@
             addon-left-icon="tim-icons icon-lock-circle"
           >
           </base-input>
+
+          <base-checkbox class="mb-3" v-model="acceptPrivacyPolicy">
+            He leído y acepto la
+            <nuxt-link to="/politicas">
+              Política de Privacidad
+              </nuxt-link>.
+          </base-checkbox>
         </div>
 
         <div slot="footer">
@@ -40,8 +47,9 @@
             type="primary"
             class="mb-3"
             size="lg"
-            @click="register()"
+            @click="register"
             block
+            :disabled="!acceptPrivacyPolicy"
           >
             Registrar
           </base-button>
@@ -62,6 +70,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   middleware: 'notAuthenticated',
@@ -72,11 +81,20 @@ export default {
         name: "",
         email: "",
         password: ""
-      }
+      },
+      acceptPrivacyPolicy: false
     };
   },
   methods: {
     register() {
+      if (!this.acceptPrivacyPolicy) {
+        this.$notify({
+          type: "danger",
+          icon: "tim-icons icon-alert-circle-exc",
+          message: "Debes aceptar la Política de Privacidad para registrarte."
+        });
+        return;
+      }
 
       this.$axios
         .post("/register", this.user)
@@ -92,6 +110,7 @@ export default {
             this.user.name = "";
             this.user.password = "";
             this.user.email = "";
+            this.acceptPrivacyPolicy = false;
 
             return;
           }
@@ -119,16 +138,12 @@ export default {
 
             return;
           }
-
-
-
         });
-
-
     }
   }
 };
 </script>
+
 <style>
 .navbar-nav .nav-item p {
   line-height: inherit;
